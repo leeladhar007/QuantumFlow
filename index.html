@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumFlow: Quantum Computing Simulation Toolkit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+</head>
+<body>
+    <!-- Menu Bar -->
+    <nav class="menu-bar">
+        <div class="menu-container">
+            <div class="logo">
+                <i class="fas fa-atom"></i>
+                <span>QuantumFlow</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-content="quantum-computing">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Quantum Computing</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <span>Quantum Gates</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown">
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link" onclick="showContent('h-gate')">
+                                <i class="fas fa-project-diagram"></i>
+                                <span>H Gate (Hadamard)</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link" onclick="showContent('x-gate')">
+                                <i class="fas fa-times-circle"></i>
+                                <span>X Gate (Pauli-X)</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link" onclick="showContent('cnot-gate')">
+                                <i class="fas fa-link"></i>
+                                <span>CNOT Gate</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link" onclick="showContent('all-gates')">
+                                <i class="fas fa-th"></i>
+                                <span>All Gates</span>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Concepts</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown">
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link" onclick="showContent('superposition')">
+                                <i class="fas fa-circle-notch"></i>
+                                <span>Superposition</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link" onclick="showContent('entanglement')">
+                                <i class="fas fa-link"></i>
+                                <span>Entanglement</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link" onclick="showContent('interference')">
+                                <i class="fas fa-wave-square"></i>
+                                <span>Interference</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#" class="dropdown-link" onclick="showContent('decoherence')">
+                                <i class="fas fa-hourglass-half"></i>
+                                <span>Decoherence</span>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showContent('applications')">
+                        <i class="fas fa-rocket"></i>
+                        <span>Applications</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showContent('resources')">
+                        <i class="fas fa-book"></i>
+                        <span>Resources</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-atom"></i> QuantumFlow: Quantum Computing Simulation Toolkit</h1>
+            <p class="subtitle">Drag and drop quantum gates to build circuits, visualize results, and generate executable code for real quantum computers</p>
+        </header>
+        
+        <div class="app-container">
+            <div class="panel">
+                <h2><i class="fas fa-puzzle-piece"></i> Quantum Gates</h2>
+                <div class="gates">
+                    <div class="gate" draggable="true" data-gate="H" data-description="Hadamard: Creates superposition">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>H Gate</span>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="X" data-description="Pauli-X: Bit flip">
+                        <i class="fas fa-times-circle"></i>
+                        <span>X Gate</span>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="Y" data-description="Pauli-Y: Y rotation">
+                        <i class="fas fa-yin-yang"></i>
+                        <span>Y Gate</span>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="Z" data-description="Pauli-Z: Phase flip">
+                        <i class="fas fa-bolt"></i>
+                        <span>Z Gate</span>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="CX" data-description="CNOT: Controlled NOT">
+                        <i class="fas fa-link"></i>
+                        <span>CNOT Gate</span>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="SWAP" data-description="SWAP: Exchange states">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>SWAP Gate</span>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="RX" data-description="RX: X-axis rotation">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>RX Gate</span>
+                        <div class="gate-param">θ: <input type="number" value="1.57" min="0" max="6.28" step="0.01"></div>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="RY" data-description="RY: Y-axis rotation">
+                        <i class="fas fa-redo-alt"></i>
+                        <span>RY Gate</span>
+                        <div class="gate-param">θ: <input type="number" value="1.57" min="0" max="6.28" step="0.01"></div>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="RZ" data-description="RZ: Z-axis rotation">
+                        <i class="fas fa-circle-notch"></i>
+                        <span>RZ Gate</span>
+                        <div class="gate-param">θ: <input type="number" value="1.57" min="0" max="6.28" step="0.01"></div>
+                    </div>
+                    <div class="gate" draggable="true" data-gate="Measure" data-description="Measure: Collapse state">
+                        <i class="fas fa-ruler"></i>
+                        <span>Measure</span>
+                    </div>
+                </div>
+                
+                <!-- Interference Controls -->
+                <div class="interference-controls">
+                    <h3><i class="fas fa-wave-square"></i> Interference Control</h3>
+                    <div class="slider-container">
+                        <label for="interference-level">Interference Level:</label>
+                        <input type="range" id="interference-level" class="interference-slider" min="0" max="100" value="50">
+                        <span class="slider-value" id="interference-value">50%</span>
+                    </div>
+                    <div class="slider-container">
+                        <label for="phase-shift">Phase Shift:</label>
+                        <input type="range" id="phase-shift" class="interference-slider" min="0" max="360" value="0">
+                        <span class="slider-value" id="phase-value">0°</span>
+                    </div>
+                    <button id="apply-interference" class="bloch-btn"><i class="fas fa-sliders-h"></i> Apply Interference</button>
+                </div>
+                
+                <div class="quantum-state" id="quantum-state-display">
+                    |ψ⟩ = 1.00|000⟩
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>Qubits</h3>
+                        <div class="stat-value" id="qubit-count">3</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Gates Used</h3>
+                        <div class="stat-value" id="gate-count">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Depth</h3>
+                        <div class="stat-value" id="circuit-depth">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Fidelity</h3>
+                        <div class="stat-value" id="fidelity">100%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2><i class="fas fa-project-diagram"></i> Quantum Circuit</h2>
+                <div class="circuit" id="circuit">
+                    <div class="qubit" data-qubit="0">
+                        <div class="qubit-label">0</div>
+                    </div>
+                    <div class="qubit" data-qubit="1">
+                        <div class="qubit-label">1</div>
+                    </div>
+                    <div class="qubit" data-qubit="2">
+                        <div class="qubit-label">2</div>
+                    </div>
+                </div>
+                
+                <div class="circuit-step">
+                    <span>Step-by-step execution</span>
+                    <div class="step-controls">
+                        <button id="prev-step"><i class="fas fa-backward"></i></button>
+                        <button id="next-step"><i class="fas fa-forward"></i></button>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="run-btn"><i class="fas fa-play"></i> Run Simulation</button>
+                    <button id="clear-btn" class="clear-btn"><i class="fas fa-trash"></i> Clear Circuit</button>
+                    <button id="add-qubit"><i class="fas fa-plus"></i> Add Qubit</button>
+                    <button id="remove-qubit"><i class="fas fa-minus"></i> Remove Qubit</button>
+                    <button id="export-btn"><i class="fas fa-download"></i> Export Code</button>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2><i class="fas fa-code"></i> Generated Code</h2>
+                <div class="code-container" id="code-output">
+# Quantum code will appear here
+from qiskit import QuantumCircuit, Aer, execute
+import numpy as np
+
+# Create a quantum circuit with 3 qubits
+qc = QuantumCircuit(3)
+
+# Add gates
+qc.h(0)
+qc.cx(0, 1)
+qc.rx(np.pi/2, 2)
+qc.measure_all()
+
+# Execute the circuit
+simulator = Aer.get_backend('qasm_simulator')
+result = execute(qc, simulator, shots=1000).result()
+counts = result.get_counts(qc)
+print("Counts:", counts)
+                </div>
+                
+                <h2 style="margin-top: 20px;"><i class="fas fa-chart-bar"></i> Simulation Results</h2>
+                <div class="code-container" id="simulation-output">
+# Results will appear here
+Counts: {'000': 512, '001': 0, '010': 0, '011': 0, 
+         '100': 0, '101': 0, '110': 488, '111': 0}
+                </div>
+            </div>
+        </div>
+        
+        <div class="visualizations">
+            <div class="viz-container">
+                <h3>Probability Distribution</h3>
+                <div id="prob-chart"></div>
+            </div>
+            <div class="viz-container">
+                <h3>Gate Usage Statistics</h3>
+                <div id="gate-chart"></div>
+            </div>
+        </div>
+        
+        <!-- Quantum Interference Pattern Visualization -->
+        <div class="panel">
+            <h2><i class="fas fa-wave-square"></i> Quantum Interference Patterns</h2>
+            <div class="interference-visualization" id="interference-canvas-container">
+                <canvas id="interference-canvas" width="600" height="400"></canvas>
+            </div>
+            <div class="interference-pattern-controls">
+                <button id="start-interference" class="interference-btn"><i class="fas fa-play"></i> Start Animation</button>
+                <button id="stop-interference" class="interference-btn"><i class="fas fa-stop"></i> Stop Animation</button>
+                <button id="reset-interference" class="interference-btn"><i class="fas fa-sync"></i> Reset</button>
+            </div>
+            <div class="interference-controls" style="margin-top: 15px;">
+                <h3><i class="fas fa-sliders-h"></i> Interference Parameters</h3>
+                <div class="slider-container">
+                    <label for="wave-frequency">Frequency:</label>
+                    <input type="range" id="wave-frequency" class="interference-slider" min="1" max="10" value="3" step="0.1">
+                    <span class="slider-value" id="frequency-value">3.0</span>
+                </div>
+                <div class="slider-container">
+                    <label for="wave-amplitude">Amplitude:</label>
+                    <input type="range" id="wave-amplitude" class="interference-slider" min="10" max="100" value="50">
+                    <span class="slider-value" id="amplitude-value">50</span>
+                </div>
+                <div class="slider-container">
+                    <label for="phase-difference">Phase Difference:</label>
+                    <input type="range" id="phase-difference" class="interference-slider" min="0" max="360" value="0">
+                    <span class="slider-value" id="phase-diff-value">0°</span>
+                </div>
+                <div class="slider-container">
+                    <label for="qubit-separation">Qubit Separation:</label>
+                    <input type="range" id="qubit-separation" class="interference-slider" min="50" max="300" value="150">
+                    <span class="slider-value" id="separation-value">150px</span>
+                </div>
+                <button id="apply-interference-params" class="interference-btn"><i class="fas fa-check"></i> Apply Parameters</button>
+            </div>
+        </div>
+        
+        
+        <!-- Educational Content Section -->
+        <div id="educational-content" class="educational-content">
+            <h2 id="content-title">Quantum Computing</h2>
+            <div id="content-body">
+                <p>Select a topic from the menu to learn about quantum computing concepts, gates, and applications.</p>
+            </div>
+            <button class="close-btn" onclick="hideContent()">Close</button>
+        </div>
+        
+        <h2 style="margin: 30px 0 20px; color: var(--accent);"><i class="fas fa-book-open"></i> Quantum Computing Fundamentals</h2>
+        <div class="articles">
+            <div class="article">
+                <h3>What is Quantum Computing?</h3>
+                <p>Quantum computing harnesses the phenomena of quantum mechanics to deliver a huge leap forward in computation to solve certain problems.</p>
+                <p>IBM plans to house a 1,000-qubit quantum computer by 2023. Now, a team in Australia has engineered a quantum processor that scales up using atoms in silicon.</p>
+                <a href="#" class="read-more" onclick="showContent('quantum-computing'); return false;">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="article">
+                <h3>Quantum Supremacy Achieved</h3>
+                <p>Google's quantum computer, Sycamore, performed a calculation in 200 seconds that would take the world's fastest supercomputer 10,000 years.</p>
+                <p>This milestone demonstrates the potential of quantum computing to solve problems beyond the reach of classical computers.</p>
+                <a href="#" class="read-more" onclick="showContent('applications'); return false;">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="article">
+                <h3>Applications of Quantum Computing</h3>
+                <p>Quantum computers could revolutionize fields like cryptography, drug discovery, financial modeling, and climate change research by solving complex problems much faster than classical computers.</p>
+                <a href="#" class="read-more" onclick="showContent('applications'); return false;">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>QuantumFlow: Quantum Computing Simulation Toolkit | Built with React.js, Three.js, D3.js, FastAPI, and Qiskit</p>
+            <p>© 2023 Quantum Labs. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="script.js?v=4.0"></script>
+</body>
+</html>
